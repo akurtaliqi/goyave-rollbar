@@ -39,7 +39,7 @@ func Register(router *goyave.Router) {
 
 	router.StatusHandler(func(response *goyave.Response, request *goyave.Request) {
 		rollbar.Warning("Bad request", map[string]interface{}{
-			"<nil>4040": "yo",
+			"<nil>4040": "message here",
 		})
 		switch response.GetStatus() {
 		case 401:

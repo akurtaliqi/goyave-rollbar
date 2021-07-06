@@ -30,7 +30,7 @@ func SayHi(response *goyave.Response, request *goyave.Request) {
 
 func DummyModel(response *goyave.Response, request *goyave.Request) {
 	var u *model.User
-	u.Name = "yolo"
+	u.Name = "fake name"
 }
 
 // Echo is a controller handler writing the input field "text" as a response.
