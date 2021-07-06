@@ -1,6 +1,11 @@
 package middleware
 
-import "goyave.dev/goyave/v3"
+import (
+	"net/http"
+
+	"github.com/rollbar/rollbar-go"
+	"goyave.dev/goyave/v3"
+)
 
 // Middleware are handlers executed before the controller handler.
 // They are a convenient way to filter, intercept or alter HTTP requests entering your application.
@@ -15,5 +20,16 @@ func MyCustomMiddleware(next goyave.Handler) goyave.Handler {
 	return func(response *goyave.Response, request *goyave.Request) {
 		// Do something
 		next(response, request) // Pass to the next handler
+	}
+}
+
+func RollbarMiddleware(next goyave.Handler) goyave.Handler {
+	return func(response *goyave.Response, request *goyave.Request) {
+		defer func() {
+			if response.GetStatus() == http.StatusUnauthorized {
+				rollbar.Warning("Warning unauthorized ")
+			}
+		}()
+		next(response, request)
 	}
 }

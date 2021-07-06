@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"goyave.dev/goyave/v3"
+	"goyave.dev/template/database/model"
 )
 
 // Controllers are files containing a collection of Handlers related to a specific feature.
@@ -25,6 +26,11 @@ import (
 // https://goyave.dev/guide/basics/requests.html
 func SayHi(response *goyave.Response, request *goyave.Request) {
 	response.String(http.StatusOK, "Hi!")
+}
+
+func DummyModel(response *goyave.Response, request *goyave.Request) {
+	var u *model.User
+	u.Name = "yolo"
 }
 
 // Echo is a controller handler writing the input field "text" as a response.
