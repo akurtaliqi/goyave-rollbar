@@ -17,11 +17,6 @@ func main() {
 	rollbar.SetServerHost("web.1")                                // optional override; defaults to hostname
 	rollbar.SetServerRoot("github.com/akurtaliqi/goyave-rollbar") // path of project (required for GitHub integration and non-project stacktrace collapsing)
 
-	/*authenticator := auth.RollbarMiddleware(goyave.ErrorStatusHandler)
-	fmt.Printf("authenticator: %v\n", authenticator)*/
-
-	// authenticator := auth.Middleware(&model.User{}, &auth.BasicAuthenticator{})
-
 	exitCode := 0
 	if err := goyave.Start(route.Register); err != nil {
 		rollbar.Critical(err)
