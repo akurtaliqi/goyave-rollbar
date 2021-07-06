@@ -37,20 +37,24 @@ func Register(router *goyave.Router) {
 
 	router.Get("/dummy", hello.DummyModel)
 
+	router.Get("/panic", hello.PanickyFunction)
+
 	router.StatusHandler(func(response *goyave.Response, request *goyave.Request) {
+
 		rollbar.Warning("Bad request", map[string]interface{}{
-			"<nil>4040": "message here",
+			"<nil>4040": response.GetStacktrace(),
 		})
+
 		switch response.GetStatus() {
 		case 401:
-			rollbar.Warning("Warning unauthorized" + response.GetStacktrace())
+			rollbar.Warning("Warning unauthorized 2" + response.GetStacktrace())
 		case 403:
-			rollbar.Error("Error " + response.GetStacktrace())
+			rollbar.Error("Error "+request.URI().Path, response.GetStacktrace())
 		case 500:
-			rollbar.Error("Error")
+			rollbar.Critical("Critical ", response.GetStacktrace())
 			// rollbar.Message("Error route"+request.URI().Path, response.GetStacktrace())
 		}
 		goyave.PanicStatusHandler(response, request)
-	}, http.StatusNotFound, http.StatusInternalServerError, http.StatusBadRequest, http.StatusUnauthorized)
+	}, http.StatusNotFound, http.StatusInternalServerError, http.StatusBadRequest, http.StatusUnauthorized, http.StatusForbidden)
 
 }

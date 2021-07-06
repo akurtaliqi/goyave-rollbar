@@ -1,8 +1,10 @@
 package hello
 
 import (
+	"errors"
 	"net/http"
 
+	"github.com/rollbar/rollbar-go"
 	"goyave.dev/goyave/v3"
 	"goyave.dev/template/database/model"
 )
@@ -37,4 +39,13 @@ func DummyModel(response *goyave.Response, request *goyave.Request) {
 // This route is validated. See "http/request/echorequest/echo.go" for more details.
 func Echo(response *goyave.Response, request *goyave.Request) {
 	response.String(http.StatusOK, request.String("text"))
+}
+
+func PanickyFunction(response *goyave.Response, request *goyave.Request) {
+	defer func() {
+		err := recover()
+		rollbar.LogPanic(err, true) // bool argument sets wait behavior
+	}()
+
+	panic(errors.New("critical error "))
 }

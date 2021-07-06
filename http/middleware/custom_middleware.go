@@ -27,7 +27,7 @@ func RollbarMiddleware(next goyave.Handler) goyave.Handler {
 	return func(response *goyave.Response, request *goyave.Request) {
 		defer func() {
 			if response.GetStatus() == http.StatusUnauthorized {
-				rollbar.Warning("Warning unauthorized ")
+				rollbar.Warning("Warning unauthorized " + response.GetStacktrace())
 			}
 		}()
 		next(response, request)
