@@ -1,3 +1,7 @@
+# How to use Rollbar inside a Goyave project to get error monitoring in real time
+
+See the article I wrote here [Medium](https://ajtene-kurtaliqi.medium.com/go-programming-how-to-use-rollbar-inside-a-goyave-project-to-get-error-monitoring-in-real-time-667d65259b6c).
+
 # Goyave Template
 
 A template project to get started with the [Goyave](https://github.com/System-Glitch/goyave) framework.
